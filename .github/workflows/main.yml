@@ -2,7 +2,7 @@ name: Build Pet Clinic App
 on:
   push:
     branches:
-    - master
+    - main
 jobs:
   build:
     runs-on: ubuntu-latest
