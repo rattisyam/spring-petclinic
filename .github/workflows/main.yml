@@ -19,3 +19,8 @@ jobs:
       run: mvn --batch-mode --update-snapshots verify
     - name: Run tests with Maven
       run: mvn -B test --file pom.xml
+    - name: Publish Test results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+         files: test-results/**/*.xml
