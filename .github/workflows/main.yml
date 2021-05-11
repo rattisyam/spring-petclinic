@@ -13,7 +13,7 @@ jobs:
       run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
     - name: Deploy petclinic
-      run: java -jar spring-petclinic\spring-petclinic\petclinic\*.jar
+      run: ls
     
     - name: Clone Selenium Tests
       id: clone-ops
