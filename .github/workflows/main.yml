@@ -4,18 +4,29 @@ on:
     branches:
     - main
 jobs:
-  build:
-    runs-on: ubuntu-latest
+
+
+  integration:
+    runs-on: private-windows
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-
-
-    - name: publish to artifactory
+    - name: download artifact
       uses: advancedcsg-open/action-jfrog-cli@master
       with:
         url: 'https://sixartifacts.jfrog.io/artifactory/petclinic'
         credentials type: 'apikey'
         apikey: ${{ secrets.JFROG_APIKEY }}
-        args: u "./target/*.jar" petclinic --recursive=false 
+        args: dl "petclinic/*.jar" artifacts
+
+    - name: Deploy petclinic
+      run: java -jar artifacts\*.jar
+    
+    - name: Clone Selenium Tests
+      id: clone-ops
+      uses: actions/checkout@v2
+      with:
+        repository: 'rattisyam/spring-petclinic-selenium'
+        ref: 'main'
+        token: ${{ secrets.GITOPS_TOKEN }}
+
+    - name: Run Selenium Tests
+      run: spring-petclinic-selenium\.mvnw clean install
