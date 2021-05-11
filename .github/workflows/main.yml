@@ -10,10 +10,10 @@ jobs:
     runs-on: private-windows
     steps:
     - name: download artifact
-      run: jfrog rt dl "petclinic/petclinic/*.jar"  "actions-runner/_work" --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
+      run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
     - name: Deploy petclinic
-      run: java -jar actions-runner\_work\*.jar
+      run: java -jar spring-petclinic\spring-petclinic\petclinic\*.jar
     
     - name: Clone Selenium Tests
       id: clone-ops
