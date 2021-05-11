@@ -15,7 +15,7 @@ jobs:
     - name: publish to artifactory
       uses: advancedcsg-open/action-jfrog-cli@master
       with:
-        url: 'https://sixartifacts.jfrog.io/'
+        url: 'https://sixartifacts.jfrog.io/artifactory/petclinic'
         credentials type: 'apikey'
         apikey: ${{ secrets.JFROG_APIKEY }}
-        args: u "./target/*.jar" petclinic/petclinic --recursive=false 
+        args: u "./target/*.jar" petclinic --recursive=false 
