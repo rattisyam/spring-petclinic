@@ -18,4 +18,4 @@ jobs:
         url: 'https://sixartifacts.jfrog.io/'
         credentials type: 'apikey'
         apikey: ${{ secrets.JFROG_APIKEY }}
-        args: u "./target/*.jar" petclinic --recursive=false 
+        args: u "./target/*.jar" petclinic/petclinic --recursive=false 
