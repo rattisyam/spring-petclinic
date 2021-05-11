@@ -35,4 +35,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
-
+    - name: publish to artifactory
+      uses: advancedcsg-open/action-jfrog-cli@master
+      with:
+        url: 'https://sixartifacts.jfrog.io/'
+        credentials type: 'apikey'
+        apikey: ${{ secrets.JFROG_APIKEY }}
+        args: u "./target/*.jar" "petclinic"
