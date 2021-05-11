@@ -10,15 +10,10 @@ jobs:
     runs-on: private-windows
     steps:
     - name: download artifact
-      uses: advancedcsg-open/action-jfrog-cli@master
-      with:
-        url: 'https://sixartifacts.jfrog.io/artifactory/petclinic'
-        credentials type: 'apikey'
-        apikey: ${{ secrets.JFROG_APIKEY }}
-        args: dl "petclinic/*.jar" artifacts
+      run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
     - name: Deploy petclinic
-      run: java -jar artifacts\*.jar
+      run: java -jar petclinic\*.jar
     
     - name: Clone Selenium Tests
       id: clone-ops
