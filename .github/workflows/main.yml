@@ -21,6 +21,7 @@ jobs:
       run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
     - name: Deploy petclinic
+      shell: powershell
       run: $file=Get-ChildItem -Path .\petclinic\ | select name -ExpandProperty Name 
            java -jar .\petclinic\$file.jar    
 
