@@ -26,4 +26,4 @@ jobs:
            javaw -jar .\petclinic\$file;
 
     - name: Run Selenium Tests
-      run: spring-petclinic-selenium\.mvnw clean install
+      run: .\mvnw clean install
