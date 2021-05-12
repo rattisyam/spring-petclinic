@@ -9,12 +9,6 @@ jobs:
   integration:
     runs-on: private-windows
     steps:
-    - name: download artifact
-      run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
-
-    - name: Deploy petclinic
-      run: ls
-    
     - name: Clone Selenium Tests
       id: clone-ops
       uses: actions/checkout@v2
@@ -22,6 +16,13 @@ jobs:
         repository: 'rattisyam/spring-petclinic-selenium'
         ref: 'main'
         token: ${{ secrets.GITOPS_TOKEN }}
+
+    - name: download artifact
+      run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
+
+    - name: Deploy petclinic
+      run: java -jar .\petclinic\*.jar    
+
 
     - name: Run Selenium Tests
       run: spring-petclinic-selenium\.mvnw clean install
