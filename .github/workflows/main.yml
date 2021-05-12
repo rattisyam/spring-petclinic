@@ -22,8 +22,8 @@ jobs:
 
     - name: Deploy petclinic
       shell: powershell
-      run: $file=Get-ChildItem -Path .\petclinic\ | select name -ExpandProperty Name 
-           java -jar .\petclinic\$file.jar    
+      run: $file=Get-ChildItem -Path .\petclinic\ | select name -ExpandProperty Name;
+           java -jar .\petclinic\$file.jar;
 
 
     - name: Run Selenium Tests
