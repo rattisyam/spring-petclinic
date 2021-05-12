@@ -20,10 +20,8 @@ jobs:
     - name: download artifact
       run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
-    - name: Deploy petclinic
+    - name: Deploy petclinic and test
       shell: powershell
       run: $file=Get-ChildItem -Path .\petclinic\ | select name -ExpandProperty Name;
            javaw -jar .\petclinic\$file;
-
-    - name: Run Selenium Tests
-      run: .\mvnw clean install
+           .\mvnw clean install;
