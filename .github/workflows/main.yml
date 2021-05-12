@@ -23,8 +23,7 @@ jobs:
     - name: Deploy petclinic
       shell: powershell
       run: $file=Get-ChildItem -Path .\petclinic\ | select name -ExpandProperty Name;
-           java -jar .\petclinic\$file.jar;
-
+           java -jar .\petclinic\$file;
 
     - name: Run Selenium Tests
       run: spring-petclinic-selenium\.mvnw clean install
