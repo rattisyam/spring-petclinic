@@ -23,21 +23,13 @@ jobs:
       - run: pwd
       - run: ls -l
 
-      - name: Terraform Init
-        id: init
-        run: terraform init
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate 
-
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan 
-
-      - name: Terraform Apply
-        id: apply
-        run: terraform apply -auto-approve
+      - name: Execute Terraform Templates     
+        run: |
+          cd ./integrations;
+          terraform init
+          terraform validate
+          terraform plan
+          terraform apply -auto-approve
         
       
      
