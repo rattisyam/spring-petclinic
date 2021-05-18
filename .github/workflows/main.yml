@@ -4,24 +4,43 @@ on:
     branches:
     - main
 jobs:
+    prepare-integration-env:
+      runs-on: ubuntu-latest
+      env:
+        TF_VAR_AZ_SUB: ${{ secrets.AZ_SUB }}
+        TF_VAR_AZ_TENANT: ${{ secrets.AZ_TENANT }}
+        TF_VAR_AZ_ID: ${{ secrets.AZ_ID }}
+        TF_VAR_AZ_SECRET: ${{ secrets.AZ_SECRET }}
+      steps:
+      - uses: hashicorp/setup-terraform@v1
+      - name: Clone Terraform Repo
+        id: clone-ops
+        uses: actions/checkout@v2        
+        with:
+          repository: 'rattisyam/iaac'
+          ref: 'main'
+          token: ${{ secrets.GITOPS_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate 
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan 
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
+        
+      
+     
+        
 
 
-  integration:
-    runs-on: private-windows
-    steps:
-    - name: Clone Selenium Tests
-      id: clone-ops
-      uses: actions/checkout@v2
-      with:
-        repository: 'rattisyam/spring-petclinic-selenium'
-        ref: 'main'
-        token: ${{ secrets.GITOPS_TOKEN }}
 
-    - name: download artifact
-      run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
-    - name: Deploy petclinic and test
-      shell: powershell
-      run: $file=Get-ChildItem -Path .\petclinic\ | select name -ExpandProperty Name;
-           javaw -jar .\petclinic\$file;
-           .\mvnw clean install;

@@ -1,0 +1,58 @@
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+          java-version: '11'
+          distribution: 'adopt'
+
+    - name: Build
+      run: ./mvnw package
+
+    - name: Unit Test
+      run: ./mvnw test
+    
+    - name: Sonar-cache packages
+      uses: actions/cache@v1
+      with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+    - name: Codecoverage
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+
+    - name: publish to artifactory
+      uses: advancedcsg-open/action-jfrog-cli@master
+      with:
+        url: 'https://sixartifacts.jfrog.io/artifactory/petclinic'
+        credentials type: 'apikey'
+        apikey: ${{ secrets.JFROG_APIKEY }}
+        args: u "./target/*.jar" petclinic --recursive=false
+
+  integration:
+    runs-on: private-windows
+    steps:
+    - name: Clone Selenium Tests
+      id: clone-ops
+      uses: actions/checkout@v2
+      with:
+        repository: 'rattisyam/spring-petclinic-selenium'
+        ref: 'main'
+        token: ${{ secrets.GITOPS_TOKEN }}
+
+    - name: download artifact
+      run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
+
+    - name: Deploy petclinic and test
+      shell: powershell
+      run: $file=Get-ChildItem -Path .\petclinic\ | select name -ExpandProperty Name;
+           javaw -jar .\petclinic\$file;
+           .\mvnw clean install;
