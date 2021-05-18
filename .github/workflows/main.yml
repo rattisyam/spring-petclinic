@@ -21,7 +21,7 @@ jobs:
           ref: 'main'
           token: ${{ secrets.GITOPS_TOKEN }}
       - run: pwd
-      - run: ll
+      - run: ls -l
 
       - name: Terraform Init
         id: init
