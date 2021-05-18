@@ -20,6 +20,8 @@ jobs:
           repository: 'rattisyam/iaac'
           ref: 'main'
           token: ${{ secrets.GITOPS_TOKEN }}
+      - run: pwd
+      - run: ll
 
       - name: Terraform Init
         id: init
