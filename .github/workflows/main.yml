@@ -7,10 +7,10 @@ jobs:
     prepare-integration-env:
       runs-on: ubuntu-latest
       env:
-        TF_VAR_AZ_SUB: ${{ secrets.AZ_SUB }}
-        TF_VAR_AZ_TENANT: ${{ secrets.AZ_TENANT }}
-        TF_VAR_AZ_ID: ${{ secrets.AZ_ID }}
-        TF_VAR_AZ_SECRET: ${{ secrets.AZ_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUB }}
+        ARM_TENANT_ID: ${{ secrets.AZ_TENANT }}
+        ARM_CLIENT_ID: ${{ secrets.AZ_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZ_SECRET }}
       steps:
       - uses: hashicorp/setup-terraform@v1
       - name: Clone Terraform Repo
