@@ -4,7 +4,7 @@ on:
     branches:
     - main
 jobs:
-    prepare-integration-env:
+    deploy-integration-env:
       runs-on: ubuntu-latest
       env:
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUB }}
@@ -30,6 +30,51 @@ jobs:
           terraform validate
           terraform plan
           terraform apply -auto-approve
+    
+    run-integration-test:
+      runs-on: private-windows
+      steps:
+      - name: Clone Selenium Tests
+        id: clone-ops
+        uses: actions/checkout@v2
+        with:
+          repository: 'rattisyam/spring-petclinic-selenium'
+          ref: 'main'
+          token: ${{ secrets.GITOPS_TOKEN }}
+
+      - name: download artifact
+        run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
+
+      - name: Deploy petclinic and test
+        shell: powershell
+        run: $file=Get-ChildItem -Path .\petclinic\ | select name -ExpandProperty Name;
+            javaw -jar .\petclinic\$file;
+            .\mvnw clean install;
+
+    destroy-integration-env:
+        runs-on: ubuntu-latest
+        env:
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUB }}
+          ARM_TENANT_ID: ${{ secrets.AZ_TENANT }}
+          ARM_CLIENT_ID: ${{ secrets.AZ_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZ_SECRET }}
+        steps:
+        - uses: hashicorp/setup-terraform@v1
+        - name: Clone Terraform Repo
+          id: clone-ops
+          uses: actions/checkout@v2        
+          with:
+            repository: 'rattisyam/iaac'
+            ref: 'main'
+            token: ${{ secrets.GITOPS_TOKEN }}
+        - run: pwd
+        - run: ls -l
+
+        - name: Tear Down Integration Env    
+          run: |
+            cd ./integration;
+            terraform destroy -auto-approve
+
         
       
      
