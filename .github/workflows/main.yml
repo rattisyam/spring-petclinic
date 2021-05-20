@@ -43,7 +43,7 @@ jobs:
           url: 'https://sixartifacts.jfrog.io/artifactory/petclinic'
           credentials type: 'apikey'
           apikey: ${{ secrets.JFROG_APIKEY }}
-          args: u "./target/*.jar" petclinic 
+          args: u "./target/*.jar" petclinic --interactive=false
           
     deploy-integration-env:
       runs-on: ubuntu-latest
