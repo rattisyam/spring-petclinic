@@ -34,14 +34,16 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+      
+      - run: ls -la
 
-      - name: publish to artifactory
+      - name: Publish to artifactory
         uses: advancedcsg-open/action-jfrog-cli@master
         with:
           url: 'https://sixartifacts.jfrog.io/artifactory/petclinic'
           credentials type: 'apikey'
           apikey: ${{ secrets.JFROG_APIKEY }}
-          args: u "./target/*.jar" petclinic --recursive=false
+          args: u "./target/*.jar" petclinic 
           
     deploy-integration-env:
       runs-on: ubuntu-latest
