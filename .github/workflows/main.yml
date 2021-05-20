@@ -77,7 +77,7 @@ jobs:
           token: ${{ secrets.GITOPS_TOKEN }}
 
       - name: download artifact
-        run: jfrog rt dl "petclinic/petclinic/*.jar"  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
+        run: jfrog rt dl "petclinic/petclinic/*.jar" --sort-by=created --sort-order=desc --limit=1  --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
       - name: Deploy petclinic and test
         shell: powershell
