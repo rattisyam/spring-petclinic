@@ -18,7 +18,7 @@ jobs:
 
       - name: Publish to artifactory
         uses: jfrog/setup-jfrog-cli@v1
-        run:  jfrog rt u  "./target/*.jar" petclinic --url https://sixartifacts.jfrog.io/artifactory/petclinic --apikey  ${{ secrets.JFROG_APIKEY }} 
+      - run:  jfrog rt u  "./target/*.jar" petclinic --url https://sixartifacts.jfrog.io/artifactory/petclinic --apikey  ${{ secrets.JFROG_APIKEY }} 
           
     deploy-integration-env:
       runs-on: ubuntu-latest
