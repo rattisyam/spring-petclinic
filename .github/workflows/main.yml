@@ -24,6 +24,10 @@ jobs:
         with:
             java-version: '11'
             distribution: 'adopt'
+            
+      - name: Maven clean
+        run: ./mvnw clean
+            
       - name: Build
         run: ./mvnw package
 
