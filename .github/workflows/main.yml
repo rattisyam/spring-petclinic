@@ -139,6 +139,9 @@ jobs:
         steps:
         - uses: actions/setup-java@v2
         - uses: jfrog/setup-jfrog-cli@v1
+          with:
+            java-version: '11'
+            distribution: 'adopt'
         - uses: actions/checkout@v2
           
         - run: |           
