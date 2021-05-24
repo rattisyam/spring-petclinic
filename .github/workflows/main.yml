@@ -23,8 +23,7 @@ jobs:
             jfrog rt dl "petclinic/petclinic/*.jar" --sort-by=created --sort-order=desc --limit=1 --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
         - name: Deploy petclinic and test       
-          run: javaw -jar ./petclinic/*.jar;
-              .\mvnw clean install;
+          run: java -jar ./petclinic/*.jar &;             
         
         - name: Jmeter Test
           uses: rbhadti94/apache-jmeter-action@v0.3.1
