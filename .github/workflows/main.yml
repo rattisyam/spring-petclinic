@@ -137,6 +137,7 @@ jobs:
         env:
             JF_ARTIFACTORY_1: ${{ secrets.JFROG_JWT_TOKEN }}
         steps:
+        - uses: actions/setup-java@v2
         - uses: jfrog/setup-jfrog-cli@v1
         - uses: actions/checkout@v2
           
