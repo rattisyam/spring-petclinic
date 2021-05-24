@@ -131,11 +131,11 @@ jobs:
           run: javaw -jar ./petclinic/*.jar;
               .\mvnw clean install;
         
-        - name: jmeter-tests
+        - name: Jmeter Test
           uses: rbhadti94/apache-jmeter-action@v0.3.1
           with:
             testFilePath: src/test/jmeter/petclinic_test_plan.jmx
-            outputReportsFolder: reports/
+            outputReportsFolder: target/jmeter/jmeter.csv
      
         
 
