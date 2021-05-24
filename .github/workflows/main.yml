@@ -155,16 +155,16 @@ jobs:
           uses: rbhadti94/apache-jmeter-action@v0.3.1
           with:
             testFilePath: src/test/jmeter/petclinic_test_plan.jmx
-            outputReportsFolder: target/surefire-reports/jmeter.csv
+            outputReportsFolder: target/surefire-reports/
 
-        - name: Generate HTML report
-          run: jmeter -g target/surefire-reports/jmeter.csv -o target/surefire-reports/jmeter.html
-        
+        #- name: Generate HTML report
+          #run: jmeter -g target/surefire-reports/jmeter.csv -o target/surefire-reports/jmeter.html
+
         - name: 'Upload Artifact'
           uses: actions/upload-artifact@v2
           with:
             name: jmeter-report
-            path: target/surefire-reports/jmeter.html
+            path: target/surefire-reports/
      
         
 
