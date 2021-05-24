@@ -6,6 +6,11 @@ on:
 jobs:
     build-unittest-codeverage:
       runs-on: ubuntu-latest
+      env:
+        AZURE_WEBAPP_NAME: ${{secrets.AZ_WEBAPP_NAME}}
+        AZURE_WEBAPP_PUBLISH_PROFILE: ${{secrets.AZ_WEBAPP_PUBLISH_PROFILE}}
+        AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }}
+        
       steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -15,6 +20,10 @@ jobs:
         with:
             java-version: '11'
             distribution: 'adopt'
+            
+      - name: Maven clean
+        run: ./mvnw clean
+            
       - name: Build
         run: ./mvnw package
 
@@ -43,6 +52,13 @@ jobs:
       - name: Publish to artifactory
         uses: jfrog/setup-jfrog-cli@v1
       - run:  jfrog rt u  "./target/*.jar" petclinic --url https://sixartifacts.jfrog.io/artifactory/petclinic --apikey  ${{ secrets.JFROG_APIKEY }} 
+      
+      - name: 'Deploy to Azure WebApp'
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/target/*.jar'
           
     deploy-integration-env:
       runs-on: ubuntu-latest
