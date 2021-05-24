@@ -21,9 +21,6 @@ jobs:
           
         - run: |           
             jfrog rt dl "petclinic/petclinic/*.jar" --sort-by=created --sort-order=desc --limit=1 --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
-
-        - run: pwd
-               ls la 
                
         - name: Deploy petclinic and test       
           run: java -jar ./petclinic/*.jar &             
@@ -32,7 +29,7 @@ jobs:
           uses: rbhadti94/apache-jmeter-action@v0.3.1
           with:
             testFilePath: src/test/jmeter/petclinic_test_plan.jmx
-            outputReportsFolder: target/jmeter/jmeter.csv
+            outputReportsFolder: target/surefire-reports/jmeter.csv
      
         
 
