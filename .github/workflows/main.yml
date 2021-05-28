@@ -173,7 +173,7 @@ jobs:
         - uses: jfrog/setup-jfrog-cli@v1
 
         - name: 'Download latest artifact'
-        - run: |           
+          run: |           
             jfrog rt dl "petclinic/petclinic/*.jar" --sort-by=created --sort-order=desc --limit=1 --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
         - name: 'Deploy to Azure Web App'
