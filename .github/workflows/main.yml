@@ -52,7 +52,7 @@ jobs:
 
       - name: Publish to artifactory
         uses: jfrog/setup-jfrog-cli@v1
-      - run:  jfrog rt u  "./target/*.jar" petclinic --url https://sixartifacts.jfrog.io/artifactory/petclinic --apikey  ${{ secrets.JFROG_APIKEY }} 
+      - run:  jfrog rt u  "./target/*.jar" petclinic --url https://sixartifacts.jfrog.io/artifactory/petclinic --apikey  ${{ secrets.JFROG_APIKEY }};
               jfrog rt u  "./target/*.war" petclinic --url https://sixartifacts.jfrog.io/artifactory/petclinic --apikey  ${{ secrets.JFROG_APIKEY }} 
       
 #      - name: 'Deploy to Azure WebApp'
