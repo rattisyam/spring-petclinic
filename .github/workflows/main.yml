@@ -53,6 +53,7 @@ jobs:
       - name: Publish to artifactory
         uses: jfrog/setup-jfrog-cli@v1
       - run:  jfrog rt u  "./target/*.jar" petclinic --url https://sixartifacts.jfrog.io/artifactory/petclinic --apikey  ${{ secrets.JFROG_APIKEY }} 
+              jfrog rt u  "./target/*.war" petclinic --url https://sixartifacts.jfrog.io/artifactory/petclinic --apikey  ${{ secrets.JFROG_APIKEY }} 
       
 #      - name: 'Deploy to Azure WebApp'
 #        uses: azure/webapps-deploy@v2
@@ -174,7 +175,7 @@ jobs:
 
         - name: 'Download latest artifact'
           run: |           
-            jfrog rt dl "petclinic/petclinic/*.jar" --sort-by=created --sort-order=desc --limit=1 --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
+            jfrog rt dl "petclinic/petclinic/*.war" --sort-by=created --sort-order=desc --limit=1 --url https://sixartifacts.jfrog.io/artifactory --apikey ${{ secrets.JFROG_APIKEY }}
 
         - name: 'Deploy to Azure Web App'
           uses: azure/webapps-deploy@v2
