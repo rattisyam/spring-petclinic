@@ -1,5 +1,5 @@
 ##test comment
-# Spring PetClinic Sample Application [![Build Status](https://travis-ci.org/spring-projects/spring-petclinic.png?branch=main)](https://travis-ci.org/spring-projects/spring-petclinic/)
+# Spring PetClinic Sample Application [![Build Status](https://dev.azure.com/syam098/DoDevOps/_apis/build/status%2Frattisyam.spring-petclinic?branchName=main)](https://dev.azure.com/syam098/DoDevOps/_build/latest?definitionId=2&branchName=main)
 
 ## Understanding the Spring Petclinic application with a few diagrams
 <a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">See the presentation here</a>
